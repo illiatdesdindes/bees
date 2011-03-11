@@ -1,4 +1,4 @@
-
+require 'rubygems'
 require 'gosu'
 require './bee'
 
@@ -7,18 +7,31 @@ class Window < Gosu::Window
 	def initialize
 	  super($window_width, $window_height, false)
 	  self.caption = 'Bees foraging simulator'
-	  @bee = Bee.new self, $hive_x, $hive_y
-	  @bee.warp $hive_x, $hive_y
+	  @bg_image = Gosu::Image.new self, 'media/fond.png', true
+	  
+	  @bees = []
+	  60.times do
+	    bee = Bee.new self, $hive_x, $hive_y
+	    bee.warp $hive_x, $hive_y
+	    bee.go_out
+	    @bees << bee
+	  end
 	end
 	
 	def update
-	  @bee.go_out
-	  @bee.move
+	  @bees.each { |bee| bee.update}
 	end
 	
 	def draw
-	  @bee.draw
+	  @bg_image.draw 0,0,0
+	  @bees.each {|bee| bee.draw}
 	end
+	
+  def button_down(id)
+    if id == Gosu::Button::KbEscape
+      close
+    end
+  end
 	
 end
 

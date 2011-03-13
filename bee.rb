@@ -37,7 +37,7 @@ class Bee
 	
 	def arrived?
 	  #if @dx.to_i == @x.to_i and @dy.to_i == @y.to_i then
-	  if Gosu::distance(@x,@y, @dx,@dy) < 1
+	  if Gosu::distance(@x,@y, @dx,@dy) < 1.0
 	    true
 	  else 
 	    false
@@ -46,8 +46,8 @@ class Bee
 	
 	def move  
 	  @angle = Gosu::angle(@x, @y, @dx, @dy)
-	  @vx = Gosu::offset_x(@angle, 0.5)
-	  @vy = Gosu::offset_y(@angle, 0.5)
+	  @vx = Gosu::offset_x(@angle, 0.9)
+	  @vy = Gosu::offset_y(@angle, 0.9)
 	  
 	  @x += @vx
 	  @y += @vy

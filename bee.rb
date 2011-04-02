@@ -2,8 +2,8 @@ require './timer'
 
 class Bee
 	# :go_out, :go_in, :wait
-	def initialize(fenetre, home_x, home_y)
-	  @image = Gosu::Image.new(fenetre, 'media/bee.png')
+	def initialize(window, home_x, home_y)
+	  @image = Gosu::Image.new(window, 'media/bee.png')
 	  # vx: vitesse en x, dx: destination en x
 	  @x = @y = @vx = @vy = @dx = @dy = @angle = 0.0
 	  @home_x = home_x

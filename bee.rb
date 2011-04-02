@@ -1,3 +1,5 @@
+require './timer'
+
 class Bee
 	# :go_out, :go_in, :wait
 	def initialize(fenetre, home_x, home_y)
@@ -7,6 +9,7 @@ class Bee
 	  @home_x = home_x
 	  @home_y = home_y
 	  @task = :waiting
+	  @timer = Timer.new 6, 1
 	end
 	
 	def update
@@ -33,6 +36,14 @@ class Bee
 	
 	def destination(x, y)
 	  @dx, @dy = x, y
+	  @angle = Gosu::angle(@x, @y, @dx, @dy)
+	end
+	
+	def rand_direction
+	  # la direction est prise suivant une courbe de chance de type x-cube
+	  x = (rand) * 2 - 1
+	  x3 = x*x*x
+	  @angle += x3 * 180
 	end
 	
 	def arrived?
@@ -45,21 +56,26 @@ class Bee
 	end	
 	
 	def move  
-	  @angle = Gosu::angle(@x, @y, @dx, @dy)
+	  #@angle = Gosu::angle(@x, @y, @dx, @dy)
 	  @vx = Gosu::offset_x(@angle, 0.9)
 	  @vy = Gosu::offset_y(@angle, 0.9)
 	  
 	  @x += @vx
 	  @y += @vy
+	  @x = @x % $window_width
+	  @y = @y % $window_height
 	  
 	end
 	
 	def go_out
 	  unless @task == :go_out 
-	    destination rand($window_width), rand($window_height)
+	    #destination rand($window_width), rand($window_height)
+	    @angle = rand 360
+	    @timer.start
 	    @task = :go_out
 	  end
-	  go_in if arrived?
+	  rand_direction if @timer.next?
+	  go_in if @timer.finish?
 	end
 	
 	def go_in

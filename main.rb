@@ -10,7 +10,7 @@ class Window < Gosu::Window
 	  @bg_image = Gosu::Image.new self, 'media/fond.png', true
 	  
 	  @bees = []
-	  20.times do
+	  10.times do
 	    bee = Bee.new self, $hive_x, $hive_y
 	    bee.warp $hive_x, $hive_y
 	    bee.go_out

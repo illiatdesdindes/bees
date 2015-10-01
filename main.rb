@@ -7,7 +7,7 @@ class Window < Gosu::Window
 	def initialize
 	  super($window_width, $window_height, false)
 	  self.caption = 'Bees foraging simulator'
-	  @bg_image = Gosu::Image.new self, 'media/fond.png', true
+	  @bg_image = Gosu::Image.new 'media/fond.png'
 	  
 	  @bees = []
 	  10.times do
